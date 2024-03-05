@@ -2,13 +2,14 @@ package com.jorge.proyectoDefinitivo.persistence;
 
 
 import com.jorge.proyectoDefinitivo.model.Tarea;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TareaJPARepository {
+public interface TareaJPARepository extends JpaRepository<Tarea,Long> {
 
-    public List<Tarea> findByProject(Long idProyecto) throws RuntimeException;
+    //public List<Tarea> findByProject(Long idProyecto) throws RuntimeException;
 
 
-    public Tarea update(Tarea tarea) throws RuntimeException;
+    //public Tarea update(Tarea tarea) throws RuntimeException;
 }
