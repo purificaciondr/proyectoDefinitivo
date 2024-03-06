@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -104,6 +105,21 @@ class RestControllerProyectoTest {
 
         });
 
+    }
+
+    @Test
+    public void obtenerListaTareasProyectoOK() {
+        // given
+
+        // when
+        ResponseEntity<List<Tarea>> response = controller.obtenerListaTareasProyecto(1L);
+
+
+        // then
+        assertThat(response.getStatusCode().value())
+                .isEqualTo(HttpStatus.OK.value());
+
+        assertThat(response.getBody()).isNotNull();
     }
 
 

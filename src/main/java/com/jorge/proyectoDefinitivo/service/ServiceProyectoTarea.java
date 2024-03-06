@@ -44,7 +44,8 @@ public class ServiceProyectoTarea implements ProyectoTareaService{
 
     @Override
     public List<Tarea> obtenerTareasDelProyecto(Long idProyecto) throws ProyectoNotfoundException, RuntimeException {
-        return null;
+        Proyecto aProject = repoProyecto.findById(idProyecto).orElseThrow(() -> new ProyectoNotfoundException("Proyecto no encontrado"));
+        return repoTarea.findByProyecto_idOrderByOrdenAsc(idProyecto);
     }
 
     @Override

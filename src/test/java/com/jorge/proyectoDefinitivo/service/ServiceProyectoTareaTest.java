@@ -14,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,6 +90,19 @@ class ServiceProyectoTareaTest {
         // then
         Assertions.assertThrows(ProyectoNotfoundException.class, () -> {
             service.anadeTareaAProyecto(28L, aTarea);});
+
+    }
+
+    @Test
+    public void obtenerListaTareasProyectoOK() {
+        // given
+
+        // when
+        List<Tarea> listaTareas = service.obtenerTareasDelProyecto(2L);
+        System.out.println("ListaTares ++++++ : " + listaTareas);
+
+        // then
+        assertThat(listaTareas.size() > 0);
 
     }
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @RestController
 @RequestMapping("/proyectos")
@@ -36,7 +37,13 @@ public class RestControllerProyecto {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.anadeTareaAProyecto(id, tarea));
     }
 
-
+    @GetMapping("/{pid}/tarea")
+    public ResponseEntity<List<Tarea>> obtenerListaTareasProyecto(@PathVariable("pid") @Min(1) Long id) {
+        List<Tarea> listTareas = service.obtenerTareasDelProyecto(id);
+        if (listTareas.size() > 0 && listTareas != null)
+          return ResponseEntity.status(HttpStatus.OK).body(listTareas);
+        else return ResponseEntity.status(HttpStatus.NO_CONTENT).body(listTareas);
+    }
 
 
 }
