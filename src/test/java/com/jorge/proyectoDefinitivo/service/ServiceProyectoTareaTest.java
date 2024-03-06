@@ -1,6 +1,8 @@
 package com.jorge.proyectoDefinitivo.service;
 
+import com.jorge.proyectoDefinitivo.exception.ProyectoNotfoundException;
 import com.jorge.proyectoDefinitivo.model.Proyecto;
+import com.jorge.proyectoDefinitivo.model.Tarea;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,6 +59,37 @@ class ServiceProyectoTareaTest {
         // then
         Assertions.assertThrows(RuntimeException.class, () -> {
             service.crearProyecto(aProyecto);});
+    }
+
+    @Test
+    public void anadeTareaAProyectoOK() {
+        // given
+
+        Tarea aTarea = new Tarea(null,"Puta vida" ,LocalDate.now(), 5, false,null);
+
+        Proyecto actProject = entityManager.find(Proyecto.class,1L);
+        // when
+        Proyecto newProject = service.anadeTareaAProyecto(1L, aTarea);
+
+        System.out.println("aProject ++++++ :" + newProject);
+
+        // then
+        assertThat(newProject.getTareas().size() == actProject.getTareas().size()+1);
+
+    }
+
+    @Test
+    public void anadeTareaAProyectoNOK() {
+        // given
+
+        Tarea aTarea = new Tarea(null,"Puta vida" ,LocalDate.now(), 5, false,null);
+
+        // when
+
+        // then
+        Assertions.assertThrows(ProyectoNotfoundException.class, () -> {
+            service.anadeTareaAProyecto(28L, aTarea);});
+
     }
 
 }

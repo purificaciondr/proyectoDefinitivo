@@ -1,6 +1,8 @@
 package com.jorge.proyectoDefinitivo.Controllers;
 
+import com.jorge.proyectoDefinitivo.exception.ProyectoNotfoundException;
 import com.jorge.proyectoDefinitivo.model.Proyecto;
+import com.jorge.proyectoDefinitivo.model.Tarea;
 import com.jorge.proyectoDefinitivo.service.ProyectoTareaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -59,15 +61,46 @@ class RestControllerProyectoTest {
         Proyecto aProyecto = new Proyecto(null, "P", LocalDate.now(), null);
 
         // when
-      //  ResponseEntity<Proyecto> response = controller.createProyecto(aProyecto);
 
-      //  System.out.println(aProyecto);
 
         // then
-       // assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.BAD_REQUEST.value());
 
         Assertions.assertThrows(RuntimeException.class, () -> {
             ResponseEntity<Proyecto> response = controller.createProyecto(aProyecto);
+
+        });
+
+    }
+
+    @Test
+    public void anadirTareaProyectoOK() {
+        // given
+        Tarea aTarea = new Tarea(null,"Puta vida" ,LocalDate.now(), 5, false,null);
+
+        // when
+        ResponseEntity<Proyecto> response = controller.anadeTareaAProyecto(1L, aTarea);
+
+
+        // then
+        assertThat(response.getStatusCode().value())
+                .isEqualTo(HttpStatus.CREATED.value());
+
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getTareas()).isNotNull();
+    }
+
+    @Test
+    public void anadirTareaProyectoNOK() {
+        // given
+        Tarea aTarea = new Tarea(null,"Puta vida" ,LocalDate.now(), 5, false,null);
+
+        // when
+
+
+        // then
+
+        Assertions.assertThrows(ProyectoNotfoundException.class, () -> {
+            ResponseEntity<Proyecto> response = controller.anadeTareaAProyecto(17L, aTarea);
 
         });
 
